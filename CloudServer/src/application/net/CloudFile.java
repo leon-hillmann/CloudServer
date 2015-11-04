@@ -21,8 +21,8 @@ public class CloudFile implements Serializable{
 		if(file.isDirectory()){
 			type = FileType.DIRECTORY;
 			File [] files = file.listFiles();
+			dirContent = new ArrayList<CloudFile>();
 			if(files != null){
-				dirContent = new ArrayList<CloudFile>();
 				System.out.println(files.length);
 				for(File fi : files){
 					dirContent.add(new CloudFile(fi, this));
