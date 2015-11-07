@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
 import application.net.CloudFile;
 
@@ -11,11 +12,19 @@ public class CloudServer {
 	public static String root_path;
 	public static CloudFile rootFolder;
 	public static TransmissionServer server;
-	public static final int port = 1337;
-
+	public static int port = 1337;
+	public static final String config_path = "config.properties";
+	
 	public CloudServer(){
 		rootFolder = new CloudFile(new File(root_path));
 		System.out.println("====================Init Completed====================");
+		
+		ConfigReader reader = new ConfigReader(config_path);
+		Properties ps;
+		if((ps = reader.getConfigProperties()) != null){
+			port = Integer.parseInt(ps.getProperty("port"));
+			System.out.println("Loaded config file");
+		}
 		
 		new CommandThread().start();
 		try {
